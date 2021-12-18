@@ -1,19 +1,73 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="animation-box">
+      <lottie
+        :options="defaultOptions"
+        :height="400"
+        :width="400"
+        v-on:animCreated="handleAnimation"
+      />
+      <div>
+        <p>Speed: x{{ animationSpeed }}</p>
+        <input
+          type="range"
+          value="1"
+          min="0"
+          max="3"
+          step="0.5"
+          v-on:change="onSpeedChange"
+          v-model="animationSpeed"
+        />
+      </div>
+      <button v-on:click="stop">stop</button>
+      <button v-on:click="pause">pause</button>
+      <button v-on:click="play">play</button>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import Lottie from "vue-lottie";
 export default {
-  name: 'App',
   components: {
-    HelloWorld
-  }
-}
+    lottie: Lottie,
+  },
+  data() {
+    return {
+      defaultOptions: {
+        animationData: require("../data.json"),
+        autoplay: false,
+        loop: false,
+      },
+      animationSpeed: 0.25,
+      anim: null,
+    };
+  },
+  methods: {
+    handleAnimation: function (anim) {
+      this.anim = anim;
+    },
+    stop: function () {
+      this.anim.stop();
+    },
+    play: function () {
+      this.anim.play();
+    },
+    pause: function () {
+      this.anim.pause();
+    },
+    onSpeedChange: function () {
+      this.anim.setSpeed(this.animationSpeed);
+    },
+    onScroll: function () {
+      console.log(window.scrollY);
+      this.anim.goToAndStop(window.scrollY);
+    },
+  },
+  mounted() {
+    document.addEventListener("scroll", this.onScroll);
+  },
+};
 </script>
 
 <style>
@@ -23,6 +77,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  height: 200vh;
+}
+.animation-box {
+  position: sticky;
+  top: 10px;
 }
 </style>
