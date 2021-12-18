@@ -35,7 +35,7 @@ export default {
   data() {
     return {
       defaultOptions: {
-        animationData: require("../data.json"),
+        animationData: require("../data/growing-tree.json"),
         autoplay: false,
         loop: false,
       },
@@ -61,7 +61,7 @@ export default {
     },
     onScroll: function () {
       console.log(window.scrollY);
-      this.anim.goToAndStop(window.scrollY);
+      this.anim.goToAndStop(window.scrollY * 2);
     },
   },
   mounted() {
