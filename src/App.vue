@@ -35,9 +35,9 @@ export default {
   data() {
     return {
       defaultOptions: {
-        animationData: require("../data/growing-tree.json"),
+        animationData: require("../data/mp4tojson.json"),
         autoplay: false,
-        loop: false,
+        loop: true,
       },
       animationSpeed: 0.25,
       anim: null,
